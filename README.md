@@ -9,9 +9,16 @@
 #### 1.3 代码
 ```c
 struct Student {
-    int i;
-    short j;
-}s1, s2;
+    int i; //4
+    short j; //4
+}s1, s2; //8
+
+typedef struct B {
+    char a; //1+7 ->b偏移量必须为b大小的整数倍，所以a后面必须补全7个字节
+    double b; //8
+    char c; //1
+    char d; //1+6->结构体大小必须是所有成员大小的公倍数，所以要补全6个字节
+}structB; //24
 
 int main(int argc, const char * argv[]) {
     struct Student student;
@@ -20,9 +27,11 @@ int main(int argc, const char * argv[]) {
     s1.i = 11;
     s1.j = 2;
     
-    printf("当前结构体大小：%ld\n", sizeof(student)); //8
+    printf("Student结构体大小：%ld\n", sizeof(student)); //8
     printf("student i = %d, j = %hd\n", student.i, student.j ); //10,5
     printf("s1 i = %d, j = %hd\n", s1.i, s1.j ); //11,2
+    
+    printf("B结构体大小：%ld\n", sizeof(structB)); //24
     
     return 0;
 }
